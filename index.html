@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Cyber anthill</title>
+    <script type="text/javascript" src="grid.js"></script>
+    <script type="text/javascript" src="ant.js"></script>
+    <script type="text/javascript" src="ant.js"></script>
+    <script type="text/javascript" src="antgrid-api.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+        /*
+        void drawOverlay(int rez)
+        {
+            //color newc = srcImg.pixels[srcImg.width*(y*grid.rez+grid.rez/2)+x*grid.rez+grid.rez/2];
+
+            //color newc = srcImg.get(x*grid.rez+grid.rez/2, y*grid.rez+grid.rez/2);
+            //c = blendC(c, newc, mixingRatio);
+            //c = blendColor(c, newc, imgMode);
+
+            stroke(overlayColor);
+            line(ox * rez + rez / 2, oy * rez + rez / 2,
+                x * rez + rez / 2, y * rez + rez / 2);
+        }
+        */
+
+        let grid = new Grid(4, 3);
+        let ant = new Ant(1, 2);
+
+        console.log(move(ant, grid));
+        console.log(grid);
+
+    </script>
+
+
+</body>
+</html>
