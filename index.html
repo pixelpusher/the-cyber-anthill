@@ -6,35 +6,41 @@
     <title>Cyber anthill</title>
     <script type="text/javascript" src="grid.js"></script>
     <script type="text/javascript" src="ant.js"></script>
-    <script type="text/javascript" src="ant.js"></script>
     <script type="text/javascript" src="antgrid-api.js"></script>
+    <script type="text/javascript" src="svg.min.js"></script>
 </head>
 <body>
+
+    <svg id="drawing"></svg>
+
     <script type="text/javascript">
+        window.addEventListener('load', (event) => {
+            var draw = SVG('#drawing');
+            let dims = 32;
+            draw.size(dims, dims);
 
-        /*
-        void drawOverlay(int rez)
-        {
-            //color newc = srcImg.pixels[srcImg.width*(y*grid.rez+grid.rez/2)+x*grid.rez+grid.rez/2];
+            let grid = new Grid(dims, dims);
+            let ant = null;
+            let paths = [];
 
-            //color newc = srcImg.get(x*grid.rez+grid.rez/2, y*grid.rez+grid.rez/2);
-            //c = blendC(c, newc, mixingRatio);
-            //c = blendColor(c, newc, imgMode);
-
-            stroke(overlayColor);
-            line(ox * rez + rez / 2, oy * rez + rez / 2,
-                x * rez + rez / 2, y * rez + rez / 2);
-        }
-        */
-
-        let grid = new Grid(4, 3);
-        let ant = new Ant(1, 2);
-
-        console.log(move(ant, grid));
-        console.log(grid);
+            //for (let i = 0; i < 5; i++) {
+                //ant = createAnt(grid);
+            while (ant = createAnt(grid)) {
+                if (ant) {
+                    ant.skip = 1;
+                    //console.log(move(ant, grid));
+                    //console.log(grid);
+                    while (ant.alive) {
+                        move(ant, grid);
+                    }
+                    console.log(ant.path);
+                    paths.push(ant.paths);
+                    let polyline = draw.polyline(ant.path).fill('none').stroke({ color: 'black', width: 1 });
+                }
+            }
+            lp.printPaths({ paths: paths, x: lp.maxx / 4, y: lp.maxy / 4, w: 2 * lp.maxx / 4, passes: 2 });
+        });
 
     </script>
-
-
 </body>
 </html>

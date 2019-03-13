@@ -5,6 +5,22 @@
  */
 
 /**
+ * Create an Ant object on a given Grid, update grid accordingly.  Returns null if no more spaces are empty. 
+ * @param {Grid} grid Grid object to place new Ant into.
+ * @returns {Ant} Ant object in a random empty space on the grid.
+ */
+const createAnt = (grid) => {
+    let openCells = [], randomCell = [], ant = null;
+    openCells = grid.getCellsList(Grid.EMPTY);
+    if (openCells.length > 0) {
+        randomCell = openCells[Math.round(Math.random() * (openCells.length - 1))];
+        ant = new Ant(randomCell[0], randomCell[1]);
+        grid.set(randomCell[0], randomCell[1], Grid.FULL);
+    }
+    return ant;
+};
+
+/**
  * Move and ant on a grid, return the last and current points (x0,y0 => x1,y1) if so, otherwise null
  * @param {Ant} ant walker ant object
  * @param {Grid} grid grid to walk on
@@ -24,13 +40,13 @@ const move = (ant, grid) => {
 
         let newx = ant.x, newy = ant.y, newd = ant.dir;
         for (let newd of checkOrder) {
-            newx = ant.x + Ant.dxs[newd] / ant.skip;
-            newy = ant.y + Ant.dys[newd] / ant.skip;
+            newx = ant.x + Ant.dxs[newd] * ant.skip;
+            newy = ant.y + Ant.dys[newd] * ant.skip;
             if (grid.get(newx, newy))
                 break;
         }
         // move or die
-        if (grid.get(newx, newy) === Grid.CLEAR) {
+        if (grid.get(newx, newy) === Grid.EMPTY) {
             if ((ant.x !== newx) || (ant.y !== newy)) {
                 moved = Array(2);
                 moved[0] = [ant.x, ant.y];
@@ -42,7 +58,7 @@ const move = (ant, grid) => {
 
                 // ant IS MOVING
                 // update grid
-                grid.set(newx, newy, Grid.SOLID);
+                grid.set(newx, newy, Grid.FULL);
                 // update path
                 ant.currentLife++;
                 
